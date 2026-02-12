@@ -1,23 +1,45 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
-  <section>
-    <div class="page-header">
-      <h1>Secret</h1>
-    </div>
-    <p class="lead">You can only reveal the secret once!</p>
-    <div class="row">
-      <div class="col-sm-6 margin-bottom-10">
-        <button id="revealSecret" type="button" class="btn-lg btn-primary">Reveal secret</button>
-      </div>
-    </div>
-  </section>
+<div class="card">
+  <div style="text-align:center; margin-bottom:1.5rem;">
+    <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+      <circle cx="24" cy="24" r="24" fill="rgba(245,158,11,0.12)"/>
+      <path d="M24 15a5 5 0 0 0-5 5v3h-1a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-1v-3a5 5 0 0 0-5-5zm-2.5 8v-3a2.5 2.5 0 0 1 5 0v3h-5zm3.25 6v2.5h-1.5V29a1.25 1.25 0 1 1 1.5 0z" fill="#f59e0b"/>
+    </svg>
+  </div>
+
+  <h1 style="text-align:center;">Someone sent you a secret</h1>
+  <p class="subtitle" style="text-align:center;">Click below to reveal it. This link will stop working immediately after.</p>
+
+  <div class="info-box info-warning" style="margin-bottom:1.5rem;">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5l6.93 12H1.07L8 1.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" fill="none"/><path d="M8 6.5v3M8 11.5v.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+    <span>You can only reveal this secret <strong>once</strong>. Make sure you're ready to save it.</span>
+  </div>
+
+  <button type="button" class="btn btn-reveal" id="revealSecret">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M1.5 9s3-5.5 7.5-5.5S16.5 9 16.5 9s-3 5.5-7.5 5.5S1.5 9 1.5 9z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="9" cy="9" r="2.5" stroke="currentColor" stroke-width="1.3" fill="none"/></svg>
+    Reveal secret
+  </button>
 </div>
 {% endblock %}
 
 {% block js %}
-<script src="{{ config.STATIC_URL }}/clipboardjs/clipboard.min.js"></script>
-<script src="{{ config.STATIC_URL }}/snappass/scripts/clipboard_button.js"></script>
-<script src="{{ config.STATIC_URL }}/snappass/scripts/preview.js"></script>
+<script>
+document.getElementById('revealSecret').addEventListener('click', function() {
+  var btn = this;
+  btn.disabled = true;
+  btn.style.opacity = '0.6';
+  btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="animation:spin 0.8s linear infinite"><circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="1.5" stroke-dasharray="30 14" fill="none"/></svg> Revealing...';
+
+  var style = document.createElement('style');
+  style.textContent = '@keyframes spin{to{transform:rotate(360deg)}}';
+  document.head.appendChild(style);
+
+  var form = document.createElement('form');
+  form.method = 'post';
+  document.body.appendChild(form);
+  form.submit();
+});
+</script>
 {% endblock %}

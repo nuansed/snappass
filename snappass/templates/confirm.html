@@ -1,28 +1,61 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
-  <section>
-    <div class="page-header"><h1>Share Secret Link</h1></div>
-    <p>The secret has been temporarily saved. Send the following URL to your intended recipient.</p>
-    <div class="row">
-      <div class="col-sm-6 margin-bottom-10">
-        <input type="text" class="form-control" id="password-link" value="{{ password_link }}" readonly="readonly">
-      </div>
+<div class="card">
+  <div style="text-align:center; margin-bottom:1.5rem;">
+    <svg class="check-icon" width="48" height="48" viewBox="0 0 48 48" fill="none">
+      <circle cx="24" cy="24" r="24" fill="rgba(16,185,129,0.12)"/>
+      <path d="M15 24.5l6.5 6.5L33 18" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+  </div>
 
-      <div class="col-sm-6">
-        <button title="Copy to clipboard" type="button" class="btn btn-primary copy-clipboard-btn"
-              id="copy-clipboard-btn" data-clipboard-target="#password-link"
-              data-placement='bottom'>
-          <i class="fa fa-clipboard"></i>
-        </button>
-      </div>
-    </div>
-  </section>
+  <h1 style="text-align:center;">Secret link created</h1>
+  <p class="subtitle" style="text-align:center;">Copy and send this link to your recipient. It can only be opened once.</p>
+
+  <div class="url-row">
+    <input type="text" id="password-link" value="{{ password_link }}" readonly>
+    <button type="button" class="btn btn-copy" id="copy-btn" onclick="copyLink()">
+      <svg id="copy-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="5.5" y="5.5" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M3.5 10.5h-.25a1.25 1.25 0 0 1-1.25-1.25v-6a1.25 1.25 0 0 1 1.25-1.25h6a1.25 1.25 0 0 1 1.25 1.25v.25" stroke="currentColor" stroke-width="1.2"/></svg>
+      <span id="copy-label">Copy</span>
+    </button>
+  </div>
+
+  <div class="info-box info-muted" style="margin-top:1rem;">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.2"/><path d="M8 5v3.5M8 10.5v.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+    <span>This link will expire after one view or when the timer runs out, whichever comes first.</span>
+  </div>
+
+  <a href="/" class="link-muted">Create another secret</a>
 </div>
 {% endblock %}
 
 {% block js %}
-<script src="{{ config.STATIC_URL }}/clipboardjs/clipboard.min.js"></script>
-<script src="{{ config.STATIC_URL }}/snappass/scripts/clipboard_button.js"></script>
+<script>
+function copyLink() {
+  var input = document.getElementById('password-link');
+  var btn = document.getElementById('copy-btn');
+  var label = document.getElementById('copy-label');
+  var icon = document.getElementById('copy-icon');
+
+  navigator.clipboard.writeText(input.value).then(function() {
+    btn.classList.add('copied');
+    icon.innerHTML = '<polyline points="4,8.5 7,11.5 12,5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>';
+    label.textContent = 'Copied!';
+    setTimeout(function() {
+      btn.classList.remove('copied');
+      icon.innerHTML = '<rect x="5.5" y="5.5" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M3.5 10.5h-.25a1.25 1.25 0 0 1-1.25-1.25v-6a1.25 1.25 0 0 1 1.25-1.25h6a1.25 1.25 0 0 1 1.25 1.25v.25" stroke="currentColor" stroke-width="1.2"/>';
+      label.textContent = 'Copy';
+    }, 2000);
+  }).catch(function() {
+    input.select();
+    document.execCommand('copy');
+    btn.classList.add('copied');
+    label.textContent = 'Copied!';
+    setTimeout(function() {
+      btn.classList.remove('copied');
+      label.textContent = 'Copy';
+    }, 2000);
+  });
+}
+</script>
 {% endblock %}
