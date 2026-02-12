@@ -7,8 +7,12 @@ import redis
 from cryptography.fernet import Fernet
 from flask import abort, Flask, render_template, request
 from redis.exceptions import ConnectionError
-from werkzeug.urls import url_quote_plus
-from werkzeug.urls import url_unquote_plus
+try:
+    from urllib.parse import quote_plus as url_quote_plus
+    from urllib.parse import unquote_plus as url_unquote_plus
+except ImportError:
+    from werkzeug.urls import url_quote_plus
+    from werkzeug.urls import url_unquote_plus
 from distutils.util import strtobool
 
 NO_SSL = bool(strtobool(os.environ.get('NO_SSL', 'False')))

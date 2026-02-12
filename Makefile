@@ -1,4 +1,4 @@
-.PHONY: dev prod run test
+.PHONY: dev prod run test setup-remotes sync-upstream deploy smoke
 
 dev: dev-requirements.txt
 	pip install -r dev-requirements.txt
@@ -11,3 +11,15 @@ run: prod
 
 test:
 	PYTHONPATH=snappass venv/bin/nosetests -s tests
+
+setup-remotes:
+	./scripts/setup_remotes.sh
+
+sync-upstream:
+	./scripts/sync_upstream.sh master
+
+deploy:
+	./scripts/deploy_remote.sh --ref master
+
+smoke:
+	./scripts/smoke_test.sh https://snappass.tutima.com
