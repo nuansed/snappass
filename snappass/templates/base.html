@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>SnapPass - Share Secrets Securely</title>
+    <title>Tutima SnapPass - Secure Secret Sharing</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Share passwords and secrets through a one-time-use encrypted link">
@@ -73,22 +73,30 @@
         display: block;
       }
       .brand:hover { opacity: 0.9; }
-      .brand-icon {
-        width: 48px;
-        height: 48px;
-        margin: 0 auto 0.75rem;
-        display: block;
-      }
-      .brand-name {
-        font-size: 1.5rem;
+      .brand-logo {
+        font-size: 2rem;
         font-weight: 700;
         color: var(--text);
-        letter-spacing: -0.02em;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
       }
-      .brand-tag {
+      .brand-product {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
         font-size: 0.8125rem;
         color: var(--text-muted);
-        margin-top: 0.25rem;
+        margin-top: 0.125rem;
+      }
+      .brand-product svg {
+        flex-shrink: 0;
+      }
+      .brand-divider {
+        width: 40px;
+        height: 1px;
+        background: var(--border);
+        margin: 0.625rem auto;
       }
 
       /* -- Typography ----------------------------------- */
@@ -349,7 +357,16 @@
       }
       .footer a { color: var(--text-muted); }
       .footer a:hover { color: var(--text-dim); }
-      .footer-brand { margin-top: 0.375rem; }
+      .footer-brand {
+        margin-bottom: 0.25rem;
+        font-size: 0.75rem;
+        color: var(--text-dim);
+      }
+      .footer-brand a {
+        color: var(--text-dim);
+        font-weight: 500;
+      }
+      .footer-brand a:hover { color: var(--text); }
 
       /* -- Responsive ----------------------------------- */
       @media (max-width: 480px) {
@@ -378,20 +395,20 @@
   <body>
     <div class="wrapper">
       <a href="/" class="brand">
-        <svg class="brand-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="48" height="48" rx="12" fill="rgba(99,102,241,0.12)"/>
-          <path d="M24 14a6 6 0 0 0-6 6v4h-1a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1v-4a6 6 0 0 0-6-6zm-3 10v-4a3 3 0 1 1 6 0v4h-6zm4 7v3h-2v-3a1.5 1.5 0 1 1 2 0z" fill="#6366f1"/>
-        </svg>
-        <div class="brand-name">SnapPass</div>
-        <div class="brand-tag">One-time encrypted secret sharing</div>
+        <div class="brand-logo">Tutima</div>
+        <div class="brand-divider"></div>
+        <div class="brand-product">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2a4 4 0 0 0-4 4v2.67A1.33 1.33 0 0 0 2.67 10v3.33A1.33 1.33 0 0 0 4 14.67h8a1.33 1.33 0 0 0 1.33-1.34V10A1.33 1.33 0 0 0 12 8.67V6a4 4 0 0 0-4-4zM6 6a2 2 0 1 1 4 0v2.67H6V6z" fill="currentColor"/></svg>
+          SnapPass &middot; Secure secret sharing
+        </div>
       </a>
 
       {% block content %}{% endblock %}
     </div>
 
     <footer class="footer">
+      <div class="footer-brand">A secure service by <a href="https://www.tutima.com" target="_blank" rel="noopener">Tutima Glashutte/Sa.</a></div>
       End-to-end encrypted &middot; Secrets auto-delete after viewing or expiry
-      <div class="footer-brand">Operated by <a href="https://www.tutima.com" target="_blank" rel="noopener">Tutima</a></div>
     </footer>
 
     {% block js %}{% endblock %}
