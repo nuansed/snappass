@@ -112,7 +112,6 @@
       }
       .trust-bar-logo {
         height: 20px;
-        filter: invert(1) brightness(2);
       }
       .trust-bar-sep {
         width: 1px;
@@ -422,7 +421,7 @@
   <body>
     <div class="wrapper">
       <a href="https://www.tutima.com" class="trust-bar" target="_blank" rel="noopener">
-        <img src="https://tutima.com/wp-content/themes/tutima/img/header-logo.png" alt="Tutima" class="trust-bar-logo">
+        <img src="{{ url_for('static', filename='snappass/img/tutima-logo-white.png') }}" alt="Tutima" class="trust-bar-logo">
         <span class="trust-bar-sep"></span>
         <span class="trust-bar-label">Secure tool by Tutima</span>
       </a>
